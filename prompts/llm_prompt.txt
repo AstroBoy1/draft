@@ -1,0 +1,36 @@
+Count the material, find legal moves, evaluate the position, generate several candidate moves in UCI (2-4), evaluate each candidate, then choose the best move.
+Return your answer ONLY as valid JSON that matches the example JSON_SCHEMA below, where:
+candidate_moves_uci is a list of candidate moves in UCI (2-4).
+principal_variation_analysis should contain calculation for each candidate move.
+pv_uci is the principal variation for a candidate move and should contain 4-8 consecutive moves starting with that candidate move as a list of uci moves.
+all_legal_moves_uci is a list of all legal UCI moves in the position.
+
+Do not output any text outside the JSON and follow the below example json for the FEN string:
+{
+  "material_count": {
+    "white": {"Q":number_white_queens,"R":number_white_rooks,"B":number_white_bishops,"N":number_white_knights,"P":number_white_pawns},
+    "black": {"Q":number_black_queens,"R":number_black_rooks,"B":number_black_bishops,"N":number_black_knights,"P":number_black_pawns},
+    "material_diff": {
+      "side_ahead": "white or black or equal"
+    }
+  },
+  "all_legal_moves_uci": [],
+  "candidate_moves_uci": [],
+  "positional_evaluation": {
+    "material_summary": "white_better or black_better or equal",
+    "mobility": "white_better or black_better or equal",
+    "king_safety": "white_better or black_better or equal",
+    "pawn_structure": "white_better or black_better or equal",
+    "initial_eval_label": "white_better or black_better or equal"
+  },
+  "principal_variation_analysis": [
+    {
+      "candidate_move": "candidate move in UCI",
+      "pv_uci": [],
+      "eval_label": "white_better or black_better or equal",
+      "explanation": "summarize the move and evaluation"
+    }
+  ],
+  "final_explanation_summary": "summarize the output thus far and which move is best",
+  "best_move": "best candidate move in UCI from candidate_moves_uci"
+}

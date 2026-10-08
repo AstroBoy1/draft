@@ -1,0 +1,337 @@
+{
+    "type": "object",
+    "properties": {
+        "piece_squares": {
+            "type": "object",
+            "properties": {
+                "white": {
+                    "type": "object",
+                    "properties": {
+                        "Q": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        },
+                        "R": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        },
+                        "B": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        },
+                        "N": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        },
+                        "P": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "required": [
+                        "Q",
+                        "R",
+                        "B",
+                        "N",
+                        "P"
+                    ],
+                    "additionalProperties": false
+                },
+                "black": {
+                    "type": "object",
+                    "properties": {
+                        "Q": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        },
+                        "R": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        },
+                        "B": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        },
+                        "N": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        },
+                        "P": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "required": [
+                        "Q",
+                        "R",
+                        "B",
+                        "N",
+                        "P"
+                    ],
+                    "additionalProperties": false
+                }
+            },
+            "required": [
+                "white",
+                "black"
+            ],
+            "additionalProperties": false
+        },
+        "material_count": {
+            "type": "object",
+            "properties": {
+                "white": {
+                    "type": "object",
+                    "properties": {
+                        "Q": {
+                            "type": "integer"
+                        },
+                        "R": {
+                            "type": "integer"
+                        },
+                        "B": {
+                            "type": "integer"
+                        },
+                        "N": {
+                            "type": "integer"
+                        },
+                        "P": {
+                            "type": "integer"
+                        }
+                    },
+                    "required": [
+                        "Q",
+                        "R",
+                        "B",
+                        "N",
+                        "P"
+                    ],
+                    "additionalProperties": false
+                },
+                "black": {
+                    "type": "object",
+                    "properties": {
+                        "Q": {
+                            "type": "integer"
+                        },
+                        "R": {
+                            "type": "integer"
+                        },
+                        "B": {
+                            "type": "integer"
+                        },
+                        "N": {
+                            "type": "integer"
+                        },
+                        "P": {
+                            "type": "integer"
+                        }
+                    },
+                    "required": [
+                        "Q",
+                        "R",
+                        "B",
+                        "N",
+                        "P"
+                    ],
+                    "additionalProperties": false
+                },
+                "material_diff": {
+                    "type": "object",
+                    "properties": {
+                        "side_ahead": {
+                            "type": "string",
+                            "enum": [
+                                "white",
+                                "black",
+                                "equal"
+                            ]
+                        }
+                    },
+                    "required": [
+                        "side_ahead"
+                    ],
+                    "additionalProperties": false
+                }
+            },
+            "required": [
+                "white",
+                "black",
+                "material_diff"
+            ],
+            "additionalProperties": false
+        },
+        "piece_moves": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "from": {
+                        "type": "string"
+                    },
+                    "piece": {
+                        "type": "string",
+                        "enum": [
+                            "K",
+                            "Q",
+                            "R",
+                            "B",
+                            "N",
+                            "P"
+                        ]
+                    },
+                    "to": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    }
+                },
+                "required": [
+                    "from",
+                    "piece",
+                    "to"
+                ],
+                "additionalProperties": false
+            }
+        },
+        "all_legal_moves_uci": {
+            "type": "array",
+            "items": {
+                "type": "string"
+            }
+        },
+        "candidate_moves_uci": {
+            "type": "array",
+            "items": {
+                "type": "string"
+            }
+        },
+        "positional_evaluation": {
+            "type": "object",
+            "properties": {
+                "material_summary": {
+                    "type": "string",
+                    "enum": [
+                        "white_better",
+                        "black_better",
+                        "equal"
+                    ]
+                },
+                "mobility": {
+                    "type": "string",
+                    "enum": [
+                        "white_better",
+                        "black_better",
+                        "equal"
+                    ]
+                },
+                "king_safety": {
+                    "type": "string",
+                    "enum": [
+                        "white_better",
+                        "black_better",
+                        "equal"
+                    ]
+                },
+                "pawn_structure": {
+                    "type": "string",
+                    "enum": [
+                        "white_better",
+                        "black_better",
+                        "equal"
+                    ]
+                },
+                "initial_eval_label": {
+                    "type": "string",
+                    "enum": [
+                        "white_better",
+                        "black_better",
+                        "equal"
+                    ]
+                }
+            },
+            "required": [
+                "material_summary",
+                "mobility",
+                "king_safety",
+                "pawn_structure",
+                "initial_eval_label"
+            ],
+            "additionalProperties": false
+        },
+        "principal_variation_analysis": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "candidate_move": {
+                        "type": "string"
+                    },
+                    "pv_uci": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "eval_label": {
+                        "type": "string",
+                        "enum": [
+                            "white_better",
+                            "black_better",
+                            "equal"
+                        ]
+                    },
+                    "explanation": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "candidate_move",
+                    "pv_uci",
+                    "eval_label",
+                    "explanation"
+                ],
+                "additionalProperties": false
+            }
+        },
+        "final_explanation_summary": {
+            "type": "string"
+        },
+        "best_move": {
+            "type": "string"
+        }
+    },
+    "required": [
+        "piece_squares",
+        "material_count",
+        "piece_moves",
+        "all_legal_moves_uci",
+        "candidate_moves_uci",
+        "positional_evaluation",
+        "principal_variation_analysis",
+        "final_explanation_summary",
+        "best_move"
+    ],
+    "additionalProperties": false
+}

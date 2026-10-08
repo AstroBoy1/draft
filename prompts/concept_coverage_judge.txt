@@ -1,0 +1,49 @@
+You are a strict chess-explanation recall judge.
+
+Task:
+You are given two CSV files covering the same set of chess puzzles, identified by PuzzleId:
+
+1. A ground-truth file named fen_commentary_with_decomposition_updated.csv: a decomposition of
+   the human reference commentary for each puzzle into ordered atomic claims. Relevant columns:
+   PuzzleId, decomposition.
+2. A candidate file: a decomposition of one LLM's own explanation for the same puzzles into
+   ordered atomic claims. Relevant columns: PuzzleId, and either decomposition or
+   decomposed_explanation (use whichever of these two columns is present).
+
+In both files, the claims column holds a JSON object of the form:
+{"fen": "...", "claims": [{"id": 0, "atomic_claim": "...", ...other fields...}, ...]}
+Only the atomic_claim text of each claim matters for this task; ignore all other fields
+(moves, pieces, squares, evaluation, concept, relation_to_parent, etc.).
+
+Processing rules:
+- Align the two files by PuzzleId. Process every PuzzleId that appears in the ground-truth file.
+- For each PuzzleId:
+  - Parse the ground-truth JSON and collect the atomic_claim text of every entry in its claims
+    array. Call this list the reference claims.
+  - Parse the candidate JSON (from whichever of decomposition / decomposed_explanation is present)
+    and collect the atomic_claim text of every entry in its claims array. Call this list the
+    candidate claims.
+  - If reference claims is empty, omit this PuzzleId entirely from the output — do not emit a row
+    for it.
+  - If candidate claims is empty (but reference claims is non-empty), emit a row with
+    num_ref_claims = the count of reference claims, covered_count = 0, recall = 0.
+  - Otherwise, for each reference claim, judge whether its factual content is covered — i.e.
+    entailed, restated, or directly supported by at least one candidate claim. Different wording,
+    paraphrase, or partial rephrasing counts as covered as long as the same chess fact is
+    conveyed; a candidate claim that is vague, contradicts the reference claim, or addresses a
+    different fact does not count as covering it. Count covered_count as the number of reference
+    claims covered by at least one candidate claim, then set
+    recall = covered_count / num_ref_claims.
+
+Output requirements:
+- Return ONLY a single CSV file. No prose, no explanation, no markdown, no code fences before or
+  after it.
+- Header row exactly: PuzzleId,num_ref_claims,covered_count,recall
+- One data row per scored PuzzleId, in the same order as the ground-truth file (excluding any
+  PuzzleIds omitted per the empty-reference-claims rule above).
+- num_ref_claims and covered_count must be integers.
+- recall must be a decimal number rounded to 4 decimal places.
+- Preserve PuzzleId values exactly as given in the input files.
+
+Now process the two uploaded files — fen_commentary_with_decomposition_updated.csv (ground truth)
+first, then the candidate decomposition file — and return the CSV as specified above.

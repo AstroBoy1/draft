@@ -1,0 +1,47 @@
+Work out the material and the legal moves piece by piece, evaluate the position, generate several candidate moves in UCI (2-4), evaluate each candidate, then choose the best move.
+Return your answer ONLY as valid JSON that matches the example JSON_SCHEMA below, and produce the fields in the order they appear there, where:
+piece_squares lists, for each side and each piece type, the squares that piece type occupies in the position, in algebraic notation (for example "e4"). Work through the FEN rank by rank from rank 8 down to rank 1 and record every piece you find. Remember that digits in a FEN stand for consecutive empty squares, not pieces.
+material_count must be filled in by counting the entries you listed in piece_squares: the number for each piece type must equal the length of the corresponding list in piece_squares.
+piece_moves has one entry for every piece belonging to the side to move, including the king. The squares you already listed in piece_squares for that side give you every one of those pieces except the king, so reuse them and add the king's square as well.
+from is the square that piece stands on, in algebraic notation. piece is one of K, Q, R, B, N, P. to lists every square that piece can legally move to, which may be an empty list if the piece has no legal moves. Take pins and checks into account: a move that would leave your own king in check is not legal.
+all_legal_moves_uci must be built from piece_moves by joining each from square to each of its to squares. It must contain exactly one entry per (from, to) pair you listed, and nothing else.
+candidate_moves_uci is a list of candidate moves in UCI (2-4), each of which must appear in all_legal_moves_uci.
+principal_variation_analysis should contain calculation for each candidate move.
+pv_uci is the principal variation for a candidate move and should contain 4-8 consecutive moves starting with that candidate move as a list of uci moves.
+
+Do not output any text outside the JSON and follow the below example json for the FEN string:
+{
+  "piece_squares": {
+    "white": {"Q":[],"R":[],"B":[],"N":[],"P":[]},
+    "black": {"Q":[],"R":[],"B":[],"N":[],"P":[]}
+  },
+  "material_count": {
+    "white": {"Q":number_white_queens,"R":number_white_rooks,"B":number_white_bishops,"N":number_white_knights,"P":number_white_pawns},
+    "black": {"Q":number_black_queens,"R":number_black_rooks,"B":number_black_bishops,"N":number_black_knights,"P":number_black_pawns},
+    "material_diff": {
+      "side_ahead": "white or black or equal"
+    }
+  },
+  "piece_moves": [
+    {"from": "square in algebraic notation", "piece": "K or Q or R or B or N or P", "to": []}
+  ],
+  "all_legal_moves_uci": [],
+  "candidate_moves_uci": [],
+  "positional_evaluation": {
+    "material_summary": "white_better or black_better or equal",
+    "mobility": "white_better or black_better or equal",
+    "king_safety": "white_better or black_better or equal",
+    "pawn_structure": "white_better or black_better or equal",
+    "initial_eval_label": "white_better or black_better or equal"
+  },
+  "principal_variation_analysis": [
+    {
+      "candidate_move": "candidate move in UCI",
+      "pv_uci": [],
+      "eval_label": "white_better or black_better or equal",
+      "explanation": "summarize the move and evaluation"
+    }
+  ],
+  "final_explanation_summary": "summarize the output thus far and which move is best",
+  "best_move": "best candidate move in UCI from candidate_moves_uci"
+}

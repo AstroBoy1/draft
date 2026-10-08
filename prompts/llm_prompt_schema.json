@@ -1,0 +1,12 @@
+{
+	"type": "object",
+	"properties": {
+		"best_move": {
+			"type": "string"
+		}
+	},
+	"required": [
+		"best_move"
+	],
+	"additionalProperties": false
+}
