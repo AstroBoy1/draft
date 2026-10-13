@@ -1,9 +1,8 @@
 """Reference explanations for the similarity metric.
 
 Each explanation is scored against each master separately: `similarity_nm`
-(the national master, who annotated all 2,917 puzzles; also exposed as
-`similarity`) and `similarity_fm` (the FIDE master, a subset). The FM column is
-scored only on the puzzles the FM annotated, so its n differs.
+(the national master; also exposed as `similarity`) and `similarity_fm` (the
+FIDE master). A column is scored only where that master's annotation is present.
 """
 from functools import lru_cache
 
@@ -82,7 +81,7 @@ def cross_encoder():
 def similarity_by_source(model, explanations, labeled_reference_lists,
                          batch_size=16, chunk_size=256):
     """{source: [score or NaN per row]}; NaN where the model wrote nothing or
-    that master did not annotate the puzzle. One pass over the cross-encoder."""
+    there is no annotation from that master. One pass over the cross-encoder."""
     n = len(explanations)
     out = {src: [np.nan] * n for src in SOURCES}
     pairs, owners = [], []

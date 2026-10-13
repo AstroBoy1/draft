@@ -93,7 +93,7 @@ def compute():
         assert set(correct.unique()) <= {0, 1}
         is_c = correct == 1
         sim_nm = r["similarity"].astype(float).fillna(0.0)
-        # No fillna: NaN means the FM did not annotate the puzzle.
+        # No fillna: NaN means no annotation from that master for the puzzle.
         sim_fm = r["similarity_fm"].astype(float)
         expl = (sim_nm + cov) / 2.0
 

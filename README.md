@@ -1,25 +1,6 @@
 # ChessCheck
 
-Code and the two masters' puzzle annotations for the paper *Right for the Wrong Reasons: Evaluating LLM Chess Reasoning from Facts to Explanations*.
-
-The `data/` directory (puzzles, ground-truth labels and the masters' annotations) will be added shortly.
-
-## Abstract
-
-Large Language Models (LLMs) achieve strong performance in many domains yet still
-make simple mistakes. We study this gap in chess, where mistakes are easy to
-catch. We introduce ChessCheck, an evaluation framework that measures not only
-whether a model finds the best move in a chess puzzle but whether its response is
-right for the right reasons, along five dimensions: factuality, logical
-consistency, positional judgement, explanation quality, and solution correctness.
-Across 14 LLMs and 2,917 Lichess puzzles, we find that models are often right for
-the wrong reasons: even when they find the best move, their responses contain
-errors on basic facts such as the number of pieces on the board, their positional
-judgement is close to chance, and their explanations miss the key aspects of the
-position identified by two chess masters, whose explanations of every puzzle we
-release. A prompt targeting the diagnosed errors raises material counting by up to
-43 points but barely changes first-move accuracy. Solution correctness alone can
-therefore hide faulty reasoning.
+Code and the two masters' puzzle annotations for ChessCheck, an evaluation of LLM chess reasoning on Lichess puzzles along five dimensions: factuality, logical consistency, positional judgement, explanation quality and solution correctness.
 
 ## Pipeline
 
@@ -127,6 +108,13 @@ robustness check uses the first 500 puzzles (`--end-index 500` / `--num-rows 500
 - Moves are normalised to UCI before comparison; SAN and piece-prefixed UCI are
   accepted, and a token that resolves to no legal move is scored as illegal.
 - Explanation similarity is the cross-encoder score against each master's
-  explanation; the tables take the higher of the two where both annotated.
+  explanation; the tables take the higher of the two.
 - Puzzle ratings are the maximum-likelihood Elo rating given the solved set, with
   a bootstrap CI over puzzles.
+
+## License
+
+The code in this repository is released under the MIT License (see `LICENSE`).
+The masters' annotations (`data/puzzle_commentary.csv`, `data/puzzle_commentary_fm.csv`)
+are released under the Creative Commons Attribution 4.0 International License (CC BY 4.0).
+The puzzles come from the Lichess puzzle database, which is in the public domain (CC0).
